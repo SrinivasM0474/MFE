@@ -1,19 +1,18 @@
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { ModuleFederationPlugin } = require("webpack").container;
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const commonConfig = require("./webpack.common");
-const packageJSON = require("../package.json");
+const packageJson = require("../package.json");
 
 const devConfig = {
   mode: "development",
   output: {
-    publicPath: "http://localhost:8085/",
+    publicPath: "http://localhost:8081/",
   },
   devServer: {
-    port: 8085,
+    port: 8081,
     historyApiFallback: {
-      index: "/index.html",
+      index: "index.html",
     },
   },
   plugins: [
@@ -23,8 +22,7 @@ const devConfig = {
       exposes: {
         "./MarketingApp": "./src/bootstrap",
       },
-      shared: packageJSON.dependencies,
-      // shared: ["react", "react-dom"],
+      shared: packageJson.dependencies,
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
